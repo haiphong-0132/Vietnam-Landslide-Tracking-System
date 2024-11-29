@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=yes" />
+    <title>Bản Đồ Sạt Lở Bờ Sông Xói Lở Bờ Biển</title>
+
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
+    <script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pixi.js@8.x/dist/pixi.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.2.1/pixi.min.js"></script>
+    <script src="https://unpkg.com/leaflet-pixi-overlay"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script type="module" src="/js/main.js"></script>
+</head>
+
+<body>
+    <div id="windy"></div>
+    <button id="mapToggle" class="map-toggle">
+        <i class="fas fa-map"></i>
+    </button>
+
+    <div class="container">
+        <div class="controls-container">
+            <div class="toggle-button" onclick="toggleSidebar()">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="sidebar">
+                <h1>BẢN ĐỒ SẠT LỞ BỜ SÔNG<br>XÓI LỞ BỜ BIỂN</h1>
+                <form id="requestAPI" action="/submit-cities" method="post">
+                    <ul class="sidebar-content">
+                        <li>
+                            <div class="collapsible-header" onclick="toggleCollapsible('tinh-thanh')">
+                                <input type="checkbox" onclick="event.stopPropagation()" onchange="toggleAll(this, 'tinh-thanh')">
+                                <img src="/images/list_icons/right_arrow.png">
+                                <h2>I. TỈNH THÀNH</h2>
+                            </div>
+                            <ul id="tinh-thanh" class="collapsible-content">
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_201" value="201"> Hà Giang</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_203" value="203"> Cao Bằng</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_205" value="205"> Lào Cai</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_303" value="303"> Sơn La</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_301" value="301"> Lai Châu</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_207" value="207"> Bắc Kạn</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_209" value="209"> Lạng Sơn</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_211" value="211"> Tuyên Quang</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_213" value="213"> Yên Bái</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_215" value="215"> Thái Nguyên</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_302" value="302"> Điện Biên</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_217" value="217"> Phú Thọ</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_104" value="104"> Vĩnh Phúc</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_221" value="221"> Bắc Giang</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_106" value="106"> Bắc Ninh</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_101" value="101"> TP. Hà Nội</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_225" value="225"> Quảng Ninh</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_107" value="107"> Hải Dương</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_103" value="103"> TP.Hải Phòng</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_305" value="305"> Hòa Bình</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_109" value="109"> Hưng Yên</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_111" value="111"> Hà Nam</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_115" value="115"> Thái Bình</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_113" value="113"> Nam Định</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_117" value="117"> Ninh Bình</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_401" value="401"> Thanh Hóa</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_403" value="403"> Nghệ An</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_405" value="405"> Hà Tĩnh</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_407" value="407"> Quảng Bình</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_409" value="409"> Quảng Trị</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_411" value="411"> Thừa Thiên-Huế</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_501" value="501"> TP. Đà Nẵng</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_503" value="503"> Quảng Nam</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_505" value="505"> Quảng Ngãi</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_601" value="601"> Kon Tum</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_603" value="603"> Gia Lai</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_507" value="507"> Bình Định</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_509" value="509"> Phú Yên</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_605" value="605"> Đắk Lắk</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_511" value="511"> Khánh Hòa</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_606" value="606"> Đắk Nông</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_607" value="607"> Lâm Đồng</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_705" value="705"> Ninh Thuận</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_707" value="707"> Bình Phước</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_709" value="709"> Tây Ninh</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_711" value="711"> Bình Dương</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_713" value="713"> Đồng Nai</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_715" value="715"> Bình Thuận</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_701" value="701"> TP. Hồ Chí Minh</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_801" value="801"> Long An</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_717" value="717"> Bà Rịa-Vũng Tàu</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_803" value="803"> Đồng Tháp</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_805" value="805"> An Giang</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_807" value="807"> Tiền Giang</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_809" value="809"> Vĩnh Long</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_811" value="811"> Bến Tre</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_815" value="815"> Cần Thơ</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_813" value="813"> Kiên Giang</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_817" value="817"> Trà Vinh</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_816" value="816"> Hậu Giang</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_819" value="819"> Sóc Trăng</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_821" value="821"> Bạc Liêu</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="cities" id="city_823" value="823"> Cà Mau</label></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="collapsible-header" onclick="toggleCollapsible('bo-song')">
+                                <input type="checkbox" name="types" value="BS" onclick="event.stopPropagation()" onchange="toggleAll(this, 'bo-song')">
+                                <img src="/images/list_icons/right_arrow.png">
+                                <h2>II. BỜ SÔNG</h2>
+                            </div>
+                            <ul id="bo-song" class="collapsible-content">
+                                <li>
+                                    <div class="collapsible-header" onclick="toggleCollapsible('bo-song-danger')">
+                                        <input type="checkbox" onclick="event.stopPropagation()" onchange="toggleAll(this, 'bo-song-danger')">
+                                        <img src="/images/list_icons/right_arrow.png">
+                                        Đặc biệt nguy hiểm
+                                    </div>
+                                    <ul id="bo-song-danger" class="collapsible-content">
+                                        <li><label><input type="checkbox" class="child-checkbox" name="construction_types" value="BS 7"> Đã có kế hoạch</label></li>
+                                        <li><label><input type="checkbox" class="child-checkbox" name="construction_types" value="BS 94"> Đang trình</label></li>
+                                        <li><label><input type="checkbox" class="child-checkbox" name="construction_types" value="BS 8"> Đang rà soát</label></li>
+                                    </ul>
+                                </li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="construction_types" value="BS 9"> Nguy hiểm</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="construction_types" value="BS 66"> Bình thường</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="construction_types" value="BS 6"> Công trình</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="construction_types" value="BS 86"> Các khu vực khảo sát xói sâu</label></li>
+        
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="collapsible-header" onclick="toggleCollapsible('bo-bien')">
+                                <input type="checkbox" onclick="event.stopPropagation()" onchange="toggleAll(this, 'bo-bien')">
+                                <img src="/images/list_icons/right_arrow.png">
+                                <h2>III. BỜ BIỂN</h2>
+                            </div>
+                            <ul id="bo-bien" class="collapsible-content">
+                                <li>
+                                    <div class="collapsible-header" onclick="toggleCollapsible('bo-bien-danger')">
+                                        <input type="checkbox" name="types" value="BB" onclick="event.stopPropagation()" onchange="toggleAll(this, 'bo-bien-danger')">
+                                        <img src="/images/list_icons/right_arrow.png">
+                                        Đặc biệt nguy hiểm
+                                    </div>
+                                    <ul id="bo-bien-danger" class="collapsible-content">
+                                        <li><label><input type="checkbox" class="child-checkbox" name="construction_types" value="BB 7"> Đã có kế hoạch</label></li>
+                                        <li><label><input type="checkbox" class="child-checkbox" name="construction_types" value="BB 94"> Đang trình</label></li>
+                                        <li><label><input type="checkbox" class="child-checkbox" name="construction_types" value="BB 8"> Đang rà soát</label></li>
+                                    </ul>
+                                </li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="construction_types" value="BB 9"> Nguy hiểm</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="construction_types" value="BB 66"> Bình thường</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="construction_types" value="BB 6"> Công trình</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="construction_types" value="BB 65"> Khu vực bồi</label></li>
+                                <li><label><input type="checkbox" class="child-checkbox" name="construction_types" value="BB 88"> Khu vực xói bồi xen kẽ</label></li>
+
+                            </ul>
+                        </li>
+                        
+                        <li>
+                            <div class="collapsible-header" onclick="toggleCollapsible('lop-hanh-chinh')">
+                                <input type="checkbox" onclick="event.stopPropagation()" onchange="toggleAll(this, 'lop-hanh-chinh')">
+                                <img src="/images/list_icons/right_arrow.png">
+                                <h2>IV. CÁC LỚP HÀNH CHÍNH</h2>
+                            </div>
+                            <ul id="lop-hanh-chinh" class="collapsible-content">
+                                <li><label><input type="checkbox" class="child-checkbox" id="thuyhe"> Thủy hệ (kênh, rạch)</label></li>
+                                <!-- <li><label><input type="checkbox" class="child-checkbox" id="giaothong"> Giao thông</label></li> -->
+                                <li><label><input type="checkbox" class="child-checkbox" id="ranhgioitinh"> Ranh giới tỉnh</label></li>
+                                <!-- <li><label><input type="checkbox" class="child-checkbox" id="ranhgioihuyen"> Ranh giới huyện</label></li> -->
+                                <!-- <li><label><input type="checkbox" class="child-checkbox" id="ranhgioixa"> Ranh giới xã</label></li> -->
+                            </ul>
+                        </li>
+                    </ul>
+                    <button type="submit" id="submit-button">Tra cứu</button>
+                </form>
+            </div>
+            <div class="legend">
+                <h3>CHÚ GIẢI</h3>
+                <div class="legend-content">
+                    <div class="item"><div class="icon-box icon-7"></div><span>Sạt lở đặc biệt nguy hiểm có kế hoạch</span></div>
+                    <div class="item"><div class="icon-box icon-94"></div><span>Sạt lở đặc biệt nguy hiểm đang trình</span></div>
+                    <div class="item"><div class="icon-box icon-8"></div><span>Sạt lở đặc biệt nguy hiểm đang rà soát</span></div>
+                    <div class="item"><div class="icon-box icon-9"></div><span>Sạt lở nguy hiểm</span></div>
+                    <div class="item"><div class="icon-box icon-66"></div><span>Sạt lở bình thường</span></div>
+                    <div class="item"><div class="icon-box icon-6"></div><span>Công trình</span></div>
+                    <div class="item"><div class="icon-box icon-65"></div><span>Khu vực bồi</span></div>
+                    <div class="item"><div class="icon-box icon-86"></div><span>Khu vực khảo sát xói sâu</span></div>
+                    <div class="item"><div class="icon-box icon-88"></div><span>Khu vực xói bồi xen kẽ</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const controlsContainer = document.querySelector('.controls-container');
+            const toggleButton = document.querySelector('.toggle-button');
+            controlsContainer.classList.toggle('hidden');
+            toggleButton.classList.toggle('hidden');
+        }
+
+        function toggleCollapsible(id) {
+            var content = document.getElementById(id);
+            var header = content.previousElementSibling;
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+                header.classList.add('active');
+            } else {
+                content.style.display = 'none';
+                header.classList.remove('active');
+            }
+        }
+
+        function toggleAll(checkbox, containerId) {
+            const container = document.getElementById(containerId);
+            const childCheckboxes = container.querySelectorAll('input[type="checkbox"]');
+            
+            childCheckboxes.forEach(childBox => {
+                childBox.checked = checkbox.checked;
+            });
+
+            updateParentCheckbox(checkbox);
+        }
+
+        function updateParentCheckbox(checkbox) {
+            const parentLi = checkbox.closest('li');
+            if (!parentLi) return;
+
+            const parentUl = parentLi.closest('ul');
+            if (!parentUl) return;
+
+            const parentHeader = parentUl.previousElementSibling;
+            if (!parentHeader) return;
+
+            const parentCheckbox = parentHeader.querySelector('input[type="checkbox"]');
+            if (!parentCheckbox) return;
+
+            const siblings = parentUl.querySelectorAll(':scope > li > label > input[type="checkbox"], :scope > li > div > input[type="checkbox"]');
+            const allChecked = Array.from(siblings).every(cb => cb.checked);
+            const someChecked = Array.from(siblings).some(cb => cb.checked);
+
+            parentCheckbox.checked = allChecked;
+            parentCheckbox.indeterminate = someChecked && !allChecked;
+
+            updateParentCheckbox(parentCheckbox);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+            allCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (this.closest('.collapsible-header')) {
+                    } else {
+                        updateParentCheckbox(this);
+                    }
+                });
+            });
+        });
+    </script>
+
+<div id="notificationMessage"></div>
+<button id="bellNotificationButton">
+    <i class="fas fa-bell bell-inactive"></i>
+</button>
+
+<input type="checkbox" id="receiveAlerts" style="display:none;">
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const bellButton = document.getElementById('bellNotificationButton');
+        const bellIcon = bellButton.querySelector('i');
+        const checkbox = document.getElementById('receiveAlerts');
+        const messageBox = document.getElementById('notificationMessage');
+
+        // Hàm cập nhật trạng thái icon
+        function updateBellIcon() {
+            if (checkbox.checked) {
+                bellIcon.classList.remove('bell-inactive');
+                bellIcon.classList.add('bell-active');
+            } else {
+                bellIcon.classList.remove('bell-active');
+                bellIcon.classList.add('bell-inactive');
+            }
+        }
+
+        // Hàm hiển thị thông báo
+        function showNotification(message, isSuccess = true) {
+            messageBox.style.backgroundColor = isSuccess ? '#4CAF50' : '#F44336';
+            messageBox.textContent = message;
+            messageBox.style.display = 'block';
+
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+            }, 3000);
+        }
+
+        // Hàm lấy trạng thái từ server khi trang được tải
+        function fetchInitialState() {
+            fetch('/getNotificationStatus', {
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]')?.getAttribute('content')
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    checkbox.checked = data.receiveAlerts;
+                    updateBellIcon();
+                })
+                .catch(error => {
+                    console.error('Error fetching initial state:', error);
+                });
+        }
+
+        bellButton.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            // Đảo trạng thái checkbox
+            checkbox.checked = !checkbox.checked;
+
+            // Cập nhật giao diện icon
+            updateBellIcon();
+
+            // Tạo FormData
+            const formData = new FormData();
+            formData.append('receiveAlerts', checkbox.checked);
+
+            // Gửi request
+            fetch('/update', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]')?.getAttribute('content')
+                }
+            })
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    if (response.ok) {
+                        return response.text();
+                    }
+                    throw new Error('Network response was not ok');
+                })
+                .then(data => {
+                    console.log('Server response:', data);
+                    const message = checkbox.checked ?
+                        'Bạn đã bật thông báo thành công!' :
+                        'Bạn đã tắt thông báo thành công!';
+                    showNotification(message, true);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Hoàn tác trạng thái checkbox nếu có lỗi
+                    checkbox.checked = !checkbox.checked;
+                    updateBellIcon();
+                    showNotification('Có lỗi xảy ra! Vui lòng thử lại.', false);
+                });
+        });
+
+        // Khôi phục trạng thái từ localStorage khi tải trang
+        const savedState = localStorage.getItem('notificationState');
+        if (savedState !== null) {
+            checkbox.checked = savedState === 'true';
+            updateBellIcon();
+        }
+
+        // Lấy trạng thái từ server khi tải trang
+        fetchInitialState();
+    });
+</script>
+
+
+
+    <div id="userPopup">
+        <div id="userInfo">
+            <h3 id="userName">Người dùng: </h3>
+            <p id="userEmail">Email: </p>
+            <p id="userAddress">Địa chỉ: </p>
+        </div>
+        
+        <div class="logout-container">
+            <li sec:authorize="isAuthenticated()">
+                <a th:href="@{/logout}">Logout</a>
+            </li>
+        </div>
+    </div>
+
+    <button id="userButton">
+        <i class="fas fa-user"></i>
+    </button>
+
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            const userButton = document.getElementById("userButton");
+            const popup = document.getElementById("userPopup");
+
+            // Toggle popup visibility
+            userButton.onclick = function() {
+                popup.style.display = popup.style.display === "block" ? "none" : "block";
+                if (popup.style.display === "block") {
+                    getUserInfo();
+                }
+            };
+
+            function getUserInfo() {
+                fetch('/user-info')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('No user information available');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        document.getElementById('userName').innerHTML =   (data.name || 'N/A');
+                        document.getElementById('userEmail').innerHTML = "<strong>Email:</strong> " + (data.email || 'N/A');
+                        document.getElementById('userAddress').innerHTML = "<strong>Địa chỉ:</strong> " + (data.address || 'N/A');
+                    })
+                    .catch(error => {
+                        console.error('Error fetching user data:', error);
+                        document.getElementById('userName').textContent = "Unable to fetch user information";
+                        document.getElementById('userEmail').textContent = "";
+                    });
+            }
+
+            document.addEventListener('click', function(event) {
+                if (popup.style.display === "block" && 
+                    !popup.contains(event.target) && 
+                    event.target !== userButton) {
+                    popup.style.display = "none";
+                }
+            });
+        });
+    </script>
+
+
+</body>
+</html>

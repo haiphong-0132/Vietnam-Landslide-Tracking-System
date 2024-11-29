@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ĐĂNG KÝ</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(120deg, #f0f4f8, #b6e0f5);
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 380px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: #1a73e8;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: #333;
+            font-size: 0.9rem;
+            margin-bottom: 3px;
+        }
+
+        .form-control {
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-color: #ddd;
+            transition: all 0.3s ease;
+            padding: 5px 12px;
+            font-size: 0.9rem;
+            height: 34px;
+        }
+
+        .form-control:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 0 4px rgba(26, 115, 232, 0.5);
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+            border-radius: 15px;
+            padding: 6px 16px;
+            width: 50%;
+            display: block;
+            margin: auto;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+            font-size: 0.9rem;
+            height: 38px;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .alert {
+            text-align: center;
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+        }
+
+        .link-text {
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+
+        .link-text:hover {
+            text-decoration: underline;
+        }
+
+        .form-group span {
+            display: block;
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: #555;
+        }
+
+        .form-group span a {
+            font-weight: 600;
+            color: #1a73e8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- success message -->
+                <div th:if="${param.success}">
+                    <div class="alert alert-info">Đăng ký thành công, vui lòng đăng nhập lại!</div>
+                </div>
+
+                <h1>ĐĂNG KÝ</h1>
+
+                <form th:action="@{/registration}" method="post" th:object="${user}">
+                    <div class="form-group">
+                        <label class="control-label" for="firstName">Họ</label>
+                        <input id="firstName" class="form-control" th:field="*{firstName}" placeholder="Nhập họ của bạn" required autofocus="autofocus" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="lastName">Tên</label>
+                        <input id="lastName" class="form-control" th:field="*{lastName}" placeholder="Nhập tên của bạn" required autofocus="autofocus" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="email">Email</label>
+                        <input id="email" class="form-control" th:field="*{email}" placeholder="Nhập email của bạn" required autofocus="autofocus" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="password">Mật khẩu</label>
+                        <input id="password" class="form-control" type="password" th:field="*{password}" placeholder="Nhập mật khẩu" required autofocus="autofocus" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="passwordConfirmation">Xác nhận mật khẩu</label>
+                        <input id="passwordConfirmation" class="form-control" type="password" placeholder="Nhập lại mật khẩu" required autofocus="autofocus" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="phoneNumber">Số điện thoại</label>
+                        <input id="phoneNumber" class="form-control" type="tel" th:field="*{phoneNumber}" placeholder="Nhập số điện thoại" required autofocus="autofocus" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="address">Địa chỉ</label>
+                        <select id="address" class="form-control" th:field="*{address}" required>
+                            <option value="" disabled selected>Chọn thành phố</option>
+                            <option value="Hà Giang">Hà Giang</option>
+                            <option value="Cao Bằng">Cao Bằng</option>
+                            <option value="Lào Cai">Lào Cai</option>
+                            <option value="Sơn La">Sơn La</option>
+                            <option value="Lai Châu">Lai Châu</option>
+                            <option value="Bắc Kạn">Bắc Kạn</option>
+                            <option value="Lạng Sơn">Lạng Sơn</option>
+                            <option value="Tuyên Quang">Tuyên Quang</option>
+                            <option value="Yên Bái">Yên Bái</option>
+                            <option value="Thái Nguyên">Thái Nguyên</option>
+                            <option value="Điện Biên">Điện Biên</option>
+                            <option value="Phú Thọ">Phú Thọ</option>
+                            <option value="Vĩnh Phúc">Vĩnh Phúc</option>
+                            <option value="Bắc Giang">Bắc Giang</option>
+                            <option value="Bắc Ninh">Bắc Ninh</option>
+                            <option value="TP. Hà Nội">TP. Hà Nội</option>
+                            <option value="Quảng Ninh">Quảng Ninh</option>
+                            <option value="Hải Dương">Hải Dương</option>
+                            <option value="TP. Hải Phòng">TP. Hải Phòng</option>
+                            <option value="Hòa Bình">Hòa Bình</option>
+                            <option value="Hưng Yên">Hưng Yên</option>
+                            <option value="Hà Nam">Hà Nam</option>
+                            <option value="Thái Bình">Thái Bình</option>
+                            <option value="Nam Định">Nam Định</option>
+                            <option value="Ninh Bình">Ninh Bình</option>
+                            <option value="Thanh Hóa">Thanh Hóa</option>
+                            <option value="Nghệ An">Nghệ An</option>
+                            <option value="Hà Tĩnh">Hà Tĩnh</option>
+                            <option value="Quảng Bình">Quảng Bình</option>
+                            <option value="Quảng Trị">Quảng Trị</option>
+                            <option value="Thừa Thiên-Huế">Thừa Thiên-Huế</option>
+                            <option value="TP. Đà Nẵng">TP. Đà Nẵng</option>
+                            <option value="Quảng Nam">Quảng Nam</option>
+                            <option value="Quảng Ngãi">Quảng Ngãi</option>
+                            <option value="Kon Tum">Kon Tum</option>
+                            <option value="Gia Lai">Gia Lai</option>
+                            <option value="Bình Định">Bình Định</option>
+                            <option value="Phú Yên">Phú Yên</option>
+                            <option value="Đắk Lắk">Đắk Lắk</option>
+                            <option value="Khánh Hòa">Khánh Hòa</option>
+                            <option value="Đắk Nông">Đắk Nông</option>
+                            <option value="Lâm Đồng">Lâm Đồng</option>
+                            <option value="Ninh Thuận">Ninh Thuận</option>
+                            <option value="Bình Phước">Bình Phước</option>
+                            <option value="Tây Ninh">Tây Ninh</option>
+                            <option value="Bình Dương">Bình Dương</option>
+                            <option value="Đồng Nai">Đồng Nai</option>
+                            <option value="Bình Thuận">Bình Thuận</option>
+                            <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                            <option value="Long An">Long An</option>
+                            <option value="Bà Rịa-Vũng Tàu">Bà Rịa-Vũng Tàu</option>
+                            <option value="Đồng Tháp">Đồng Tháp</option>
+                            <option value="An Giang">An Giang</option>
+                            <option value="Tiền Giang">Tiền Giang</option>
+                            <option value="Vĩnh Long">Vĩnh Long</option>
+                            <option value="Bến Tre">Bến Tre</option>
+                            <option value="Cần Thơ">Cần Thơ</option>
+                            <option value="Kiên Giang">Kiên Giang</option>
+                            <option value="Trà Vinh">Trà Vinh</option>
+                            <option value="Hậu Giang">Hậu Giang</option>
+                            <option value="Sóc Trăng">Sóc Trăng</option>
+                            <option value="Bạc Liêu">Bạc Liêu</option>
+                            <option value="Cà Mau">Cà Mau</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Đăng ký</button>
+                    </div>
+
+                    <div class="form-group">
+                        <span>Bạn đã có tài khoản? <a href="/" th:href="@{/login}" class="link-text">Đăng nhập</a></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Function to check if passwords match
+        document.querySelector('form').addEventListener('submit', function (e) {
+            const password = document.getElementById('password').value;
+            const passwordConfirmation = document.getElementById('passwordConfirmation').value;
+
+            if (password !== passwordConfirmation) {
+                e.preventDefault(); // Prevent form submission
+                alert('Mật khẩu không khớp!');
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(120deg, #f0f4f8, #b6e0f5);
+            font-family: 'Roboto', sans-serif;
+            padding-top: 100px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            color: #1a73e8;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-control {
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-color: #ddd;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 0 5px rgba(26, 115, 232, 0.5);
+        }
+
+        .btn-primary {
+            background-color: #1a73e8;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            width: 50%;
+            display: block;
+            margin: auto;
+            margin-top: 20px;
+
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .alert {
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .link-text {
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .link-text:hover {
+            text-decoration: underline;
+        }
+
+        .form-group span {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .form-group span a {
+            font-weight: 600;
+            color: #1a73e8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>ĐĂNG NHẬP</h1>
+                <form th:action="@{/login}" method="post">
+                    <div th:if="${param.error}">
+                        <div class="alert alert-danger">Tên đăng nhập hoặc mật khẩu không đúng.</div>
+                    </div>
+                    <div th:if="${param.logout}">
+                        <div class="alert alert-info">Đã đăng xuất.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Tên đăng nhập</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Nhập địa chỉ Email" autofocus="autofocus">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mật khẩu</label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Nhập mật khẩu" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="login-submit" id="login-submit" class="btn btn-primary" value="Đăng nhập" />
+                    </div>
+                </form>
+                <div class="form-group">
+                    <span>Bạn là người dùng mới? <a href="/" th:href="@{/registration}" class="link-text">Đăng ký ngay tại đây.</a></span>
+                </div>
+
+                <div class="form-group">
+                    <span>Quên mật khẩu? <a href="/" th:href="@{/forgotPassword}">Quên mật khẩu</a></span>
+                </div>
+                <div class="form-group">
+                    <!-- mail: hello@gmail.com -->
+                    <span>Nếu có vấn đề phát sinh, hãy liên hệ với quản trị viên qua email: 
+                        <a href="mailto:vietnamlandslidetrackingsystem@gmail.com" class="link-text">vietnamlandslidetrackingsystem@gmail.com</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
