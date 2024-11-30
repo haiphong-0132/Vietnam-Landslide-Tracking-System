@@ -6,9 +6,10 @@
 Hệ thống theo dõi tình trạng sạt lở bờ sông và xói lở bờ biển tại Việt Nam, nhằm cung cấp thông tin kịp thời và chính xác về các hiện tượng thiên tai như sạt lở đất và xói mòn. Website được phát triển để hỗ trợ người dân, giúp họ nhận thức rõ hơn về mức độ nguy hiểm của các thiên tai này và chủ động xây dựng kế hoạch ứng phó.
 
 Cụ thể, hệ thống cung cấp các bản đồ thời tiết, cập nhật tình trạng sạt lở theo từng tỉnh, và cảnh báo nguy cơ sạt lở nguy hiểm. Ngoài ra, hệ thống còn hỗ trợ thông báo qua email để người dân nắm bắt thông tin nhanh chóng.
-
 > [!NOTE]  
-> Dự án của chúng tôi được lấy cảm hứng từ website [satlov2.vndss.com](http://satlov2.vndss.com/), một nền tảng cung cấp thông tin về tình trạng sạt lở tại Việt Nam. Tuy nhiên, toàn bộ mã nguồn trong dự án của chúng tôi được phát triển hoàn toàn từ con số không, do các thành viên trong nhóm thực hiện, không kế thừa bất kỳ đoạn mã nguồn nào từ các dự án bên ngoài.
+> Dự án của chúng tôi được lấy cảm hứng từ website [satlov2.vndss.com](http://satlov2.vndss.com/), một nền tảng cung cấp thông tin về tình trạng sạt lở tại Việt Nam.
+> **Tuy nhiên, toàn bộ mã nguồn trong dự án của chúng tôi được phát triển _TỪ CON SỐ KHÔNG_, do các thành viên trong nhóm thực hiện, _KHÔNG KẾ THỪA BẤT KỲ ĐOẠN MÃ NGUỒN NÀO TỪ CÁC DỰ ÁN BÊN NGOÀI_**.
+
 
 ## Các chức năng chính
 
@@ -61,7 +62,7 @@ Sau đó dùng lệnh sau để tiến hành build lại dự án và tạo file
 mvn clean install
 ```
 
-6. Sau khi build thành công, tiến hành cấu hình lại file application.properties:
+6. Sau khi build thành công, tiến hành cấu hình lại file ```application.properties```:
 ```bash
 spring.application.name=lms
 
