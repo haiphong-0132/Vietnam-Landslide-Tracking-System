@@ -21,9 +21,9 @@ Cụ thể, hệ thống cung cấp các bản đồ thời tiết, cập nhật
 
 ## Các thành viên nhóm
 
-- **Kiều Hồng Phong** - B22DCKH084
-- **Nguyễn Hải Nam** - B22DCCN558
-- **Nguyễn Phúc Hưng** - B22DCCN414
+- **Kiều Hồng Phong** - B22DCKH084 - Xử lý FrontEnd và các xử lý logic trên bản đồ.
+- **Nguyễn Hải Nam** - B22DCCN558 - Xử lý dữ liệu thô và tạo RestAPI, trả kết quả dưới dạng JSON
+- **Nguyễn Phúc Hưng** - B22DCCN414 - Xử lý dữ liệu người dùng, cải thiện hiệu suất fetch data từ API
 
 ## Cài đặt
 
